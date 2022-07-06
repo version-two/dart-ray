@@ -26,9 +26,14 @@ class Client {
     bool success = false;
     try {
       var response = await _http.get(getUrl('_availability_check'));
-      success = response.statusCode == 404;
+
+      // Added response.statusCode == 400 to work with Buggregator as well.
+      success = response.statusCode == 404 || response.statusCode == 400;
 //      Expires after 30 seconds
-      cache[fingerprint] = [success, DateTime.now().millisecondsSinceEpoch + 30];
+      cache[fingerprint] = [
+        success,
+        DateTime.now().millisecondsSinceEpoch + 30
+      ];
     } finally {
       return success;
     }
@@ -49,7 +54,7 @@ class Client {
   }
 
   Uri getUrl(String path) {
-    var urlString =  'http://$host:$portNumber/$path';
+    var urlString = 'http://$host:$portNumber/$path';
 
     return Uri.parse(urlString);
   }
@@ -61,7 +66,7 @@ class RayClient extends http.BaseClient {
   RayClient();
 
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['user-agent'] = 'Ray';
+    request.headers['user-agent'] = 'Ray 1.0';
     request.headers['Accept'] = 'application/json';
     request.headers['Content-Type'] = 'application/json';
     return _client.send(request);
