@@ -48,8 +48,10 @@ class Client {
     }
   }
 
-  String getUrl(String path) {
-    return 'http://$host:$portNumber/$path';
+  Uri getUrl(String path) {
+    var urlString =  'http://$host:$portNumber/$path';
+
+    return Uri.parse(urlString);
   }
 }
 
