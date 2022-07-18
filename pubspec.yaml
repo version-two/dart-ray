@@ -1,11 +1,13 @@
 name: ray
 description: Dart implementation of ray client for debugging dart apps faster on the fly.
-version: 0.0.3
+version: 0.1.0
 homepage: https://github.com/atiqsamtia/dart-ray
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter:
+    sdk: flutter
   http: ^0.13.4
   uuid: ^2.2.2
