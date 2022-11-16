@@ -1,8 +1,8 @@
 import 'package:ray/payloads/payload.dart';
 
 class TablePayload extends Payload {
-  Map map;
-  List list;
+  Map? map;
+  List? list;
   String label;
 
   TablePayload(this.label, {this.map, this.list});

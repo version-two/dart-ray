@@ -28,15 +28,15 @@ export 'package:ray/concerns/ray_colors.dart';
 export 'helpers.dart';
 
 class Ray {
-  static Client client;
+  static late Client client;
 
-  String uuid;
+  late String uuid;
 
-  static bool enabled;
-  static bool settingsEnabled;
-  static String host;
-  static int port;
-  static bool catchExceptions;
+  static bool enabled = false;
+  static bool settingsEnabled = false;
+  static String host = '';
+  static int port = 23517;
+  static bool catchExceptions = false;
 
   Ray() {
     client = Client(host: host, portNumber: port);
@@ -45,7 +45,7 @@ class Ray {
   }
 
   static void init(
-      {bool enabled,
+      {bool enabled = false,
       String host = 'localhost',
       int port = 23517,
       bool catchExceptions: false}) {
