@@ -5,7 +5,7 @@ class Client {
   static Map<String, List> cache = {};
   int portNumber;
   String host;
-  late String fingerprint;
+  String fingerprint;
   RayClient _http = RayClient();
 
   Client({this.portNumber = 23517, this.host = 'localhost'}) {
@@ -19,7 +19,7 @@ class Client {
       await this.performAvailabilityCheck();
     }
 
-    return cache[fingerprint]?[0] ?? true;
+    return cache[fingerprint][0] ?? true;
   }
 
   Future<bool> performAvailabilityCheck() async {

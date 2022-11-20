@@ -3,8 +3,8 @@ import 'dart:convert';
 abstract class Payload {
   String getType();
 
-  String? remotePath;
-  String? $localPath;
+  String remotePath = null;
+  String $localPath = null;
 
   Map<String, dynamic> getContent() {
     return {};
