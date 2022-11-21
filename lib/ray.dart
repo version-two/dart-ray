@@ -28,46 +28,30 @@ export 'package:ray/concerns/ray_colors.dart';
 export 'helpers.dart';
 
 class Ray {
-  static Client client;
+  static late Client client;
 
-  String uuid;
+  String uuid = '';
 
-  static bool enabled;
-  static bool settingsEnabled;
-  static String host;
-  static int port;
-  static bool catchExceptions;
+  static bool enabled = true;
+  static bool settingsEnabled = false;
+  static String host = '127.0.0.1';
+  static int port = 23517;
 
   Ray() {
-    client = Client(host: host, portNumber: port);
     uuid = Uuid().v1();
-    enabled = enabled ?? settingsEnabled ?? true;
+    Ray.client = Client(host: host, portNumber: port);
+    Ray.enabled = Ray.enabled ?? settingsEnabled ?? true;
+    print('is this even working?' + (Ray.enabled ? 'enabled' : 'disabled'));
   }
 
   static void init(
-      {bool enabled,
-      String host = 'localhost',
-      int port = 23517,
-      bool catchExceptions: false}) {
+      {bool enabled = false, String host = 'localhost', int port = 23517}) {
+    print('starting ray.' + (enabled ? 'enabled' : 'disabled'));
+
+    Ray.client = Client(host: host, portNumber: port);
     Ray.settingsEnabled = enabled;
     Ray.host = host;
     Ray.port = port;
-    Ray.catchExceptions = catchExceptions;
-
-    if (catchExceptions) {
-      FlutterError.onError = (FlutterErrorDetails details) {
-        //   //details.toString()
-        //   //ray().toJson({"Exception: "+details.exception, "Stacktrace:"+details.stack}).red();
-        //   ray().toJson(details.toString()).red();
-        //   //this line prints the default flutter gesture caught exception in console
-        //   //FlutterError.dumpErrorToConsole(details);
-        //   print("Error From INSIDE FRAME_WORK");
-        //   print("----------------------");
-        //   print("Error :  ${details.exception}");
-        //   print("StackTrace :  ${details.stack}");
-        // };
-      };
-    }
   }
 
   Ray notify(String text) {
