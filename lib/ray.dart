@@ -40,7 +40,7 @@ class Ray {
   Ray() {
     uuid = Uuid().v1();
     Ray.client = Client(host: host, portNumber: port);
-    Ray.enabled = Ray.enabled ?? settingsEnabled ?? true;
+    Ray.enabled = Ray.enabled;
     print('is this even working?' + (Ray.enabled ? 'enabled' : 'disabled'));
   }
 
@@ -48,8 +48,7 @@ class Ray {
       {bool enabled = false, String host = 'localhost', int port = 23517}) {
     print('starting ray.' + (enabled ? 'enabled' : 'disabled'));
 
-    Ray.client = Client(host: host, portNumber: port);
-    Ray.settingsEnabled = enabled;
+    Ray.enabled = enabled;
     Ray.host = host;
     Ray.port = port;
   }

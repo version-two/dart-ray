@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:ray/ray.dart';
 import 'package:ray/request.dart';
 
 class Client {
@@ -30,6 +31,7 @@ class Client {
     try {
       var response = await _http.get(getUrl('_availability_check'));
       // print(response.body);
+      print("Fetching url: " + getUrl('_availability_check').toString());
       print("Response: " + response.statusCode.toString());
       // Added response.statusCode == 400 to work with Buggregator as well.
       success = response.statusCode == 404 || response.statusCode == 400;
@@ -40,10 +42,10 @@ class Client {
           DateTime.now().millisecondsSinceEpoch + 30
         ];
       }
-    } finally {
-      print(success ? 'available' : 'unavailable');
+    } catch (e) {
       return success;
     }
+    return success;
   }
 
   Future<void> send(Request request) async {
@@ -53,15 +55,20 @@ class Client {
       return;
     }
 
+    var response;
+
     try {
-      await _http.post(getUrl(''), body: request.toJson());
+      response = await _http.post(getUrl(''), body: request.toJson());
     } catch (e) {
+      print('Error occurred while posting data:');
       print(e);
     }
+
+    print(response.body);
   }
 
   Uri getUrl(String path) {
-    var urlString = 'http://$host:$portNumber/$path';
+    var urlString = 'http://${Ray.host}:${Ray.port}/$path';
 
     return Uri.parse(urlString);
   }
@@ -73,7 +80,9 @@ class RayClient extends http.BaseClient {
   RayClient();
 
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['user-agent'] = 'Ray 1.0';
+    print('WTF??');
+
+    request.headers['User-Agent'] = 'Ray 1.0';
     request.headers['Accept'] = 'application/json';
     request.headers['Content-Type'] = 'application/json';
     return _client.send(request);
