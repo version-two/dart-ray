@@ -20,8 +20,8 @@ class Client {
       await this.performAvailabilityCheck();
     }
 
-    print("fingerprint :" + (fingerprint ?? '-'));
-    print((cache[fingerprint]?[0] ?? true) ? 'yep' : 'nope');
+    //print("fingerprint :" + (fingerprint ?? '-'));
+    //print((cache[fingerprint]?[0] ?? true) ? 'yep' : 'nope');
 
     return cache[fingerprint]?[0] ?? true;
   }
@@ -31,8 +31,8 @@ class Client {
     try {
       var response = await _http.get(getUrl('_availability_check'));
       // print(response.body);
-      print("Fetching url: " + getUrl('_availability_check').toString());
-      print("Response: " + response.statusCode.toString());
+      //print("Fetching url: " + getUrl('_availability_check').toString());
+      //print("Response: " + response.statusCode.toString());
       // Added response.statusCode == 400 to work with Buggregator as well.
       success = response.statusCode == 404 || response.statusCode == 400;
 //      Expires after 30 seconds
@@ -80,7 +80,7 @@ class RayClient extends http.BaseClient {
   RayClient();
 
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    print('WTF??');
+    //print('WTF??');
 
     request.headers['User-Agent'] = 'Ray 1.0';
     request.headers['Accept'] = 'application/json';
