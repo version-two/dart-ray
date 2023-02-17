@@ -41,12 +41,12 @@ class Ray {
     uuid = Uuid().v1();
     Ray.client = Client(host: host, portNumber: port);
     Ray.enabled = Ray.enabled;
-    print('is this even working?' + (Ray.enabled ? 'enabled' : 'disabled'));
+    // print('is this even working?' + (Ray.enabled ? 'enabled' : 'disabled'));
   }
 
   static void init(
       {bool enabled = false, String host = 'localhost', int port = 23517}) {
-    print('starting ray.' + (enabled ? 'enabled' : 'disabled'));
+    // print('starting ray.' + (enabled ? 'enabled' : 'disabled'));
 
     Ray.enabled = enabled;
     Ray.host = host;
@@ -54,7 +54,7 @@ class Ray {
   }
 
   Ray notify(String text) {
-    print('in notify');
+    // print('in notify');
     var payload = NotifyPayload(text);
     return this.sendRequest([payload]);
   }
