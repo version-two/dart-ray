@@ -10,4 +10,4 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.5
-  uuid: ^2.2.2
+  uuid: ^3.0.7
